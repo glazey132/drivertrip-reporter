@@ -1,3 +1,6 @@
+const fs = require("fs");
+const _ = require("lodash");
+
 const Models = require("./models/Models");
 
 function createDriver(wordArray) {
@@ -43,8 +46,56 @@ function getTripTimeInHours(timeStartArray, timeStopArray) {
        return tripTimeInMinutes / 60;
 }
 
+function bulidDriverReportMap(trips) {
+  const driverReportMap = {};
+
+  const filteredTrips = filterTrips(trips);
+
+  filteredTrips.map(trip => {
+    if (!driverReportMap.hasOwnProperty(trip.driver.name)) {
+      driverReportMap[trip.driver.name] = {
+        totalMiles: 0,
+        totalTime: 0
+      };
+    }
+    driverReportMap[trip.driver.name].totalMiles += Math.round(
+      parseFloat(trip.milesDriven)
+    );
+    driverReportMap[trip.driver.name].totalTime += trip.timeInMinutes;
+  });
+
+  for (const name in driverReportMap) {
+    const mph =
+      driverReportMap[name].totalMiles / (driverReportMap[name].totalTime / 60);
+    driverReportMap[name].mph = Math.round(mph);
+    driverReportMap[name].name = name;
+  }
+
+  return driverReportMap;
+}
+
+function writeResultFile(finalReport, drivers) {
+  var wstream = fs.createWriteStream("myOutput.txt");
+
+  _.each(finalReport, function(driverReport) {
+    wstream.write(
+      `${driverReport.name}: ${driverReport.totalMiles} miles @ ${driverReport.mph} mph\n`
+    );
+  });
+
+  // write 0 miles for drivers without trips
+  drivers.map(driver => {
+    if (!finalReport.hasOwnProperty(driver.name)) {
+      wstream.write(`${driver.name}: 0 miles\n`);
+    }
+  });
+  wstream.end();
+}
+
 module.exports = {
   createDriver,
   createTrip,
-  filterTrips
+  filterTrips,
+  bulidDriverReportMap,
+  writeResultFile
 };
