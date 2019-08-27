@@ -1,7 +1,7 @@
 Dan: 39 miles @ 47 mph
 Alex: 82 miles @ 18 mph
 Chloe: 365 miles @ 16 mph
-Bob: 0 miles
+Bob: 365 miles @ 21 mph
 Mariah: 0 miles
 Jim: 0 miles
 Justin: 0 miles
