@@ -46,7 +46,7 @@ function getTripTimeInHours(timeStartArray, timeStopArray) {
        return tripTimeInMinutes / 60;
 }
 
-function bulidDriverReportMap(trips) {
+function buildDriverReportMap(trips) {
   const driverReportMap = {};
 
   const filteredTrips = filterTrips(trips);
@@ -96,6 +96,6 @@ module.exports = {
   createDriver,
   createTrip,
   filterTrips,
-  bulidDriverReportMap,
+  buildDriverReportMap,
   writeResultFile
 };

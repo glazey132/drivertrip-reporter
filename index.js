@@ -48,7 +48,7 @@ function run() {
   });
 
   stream.on("end", function() {
-    const driverReportMap = helpers.bulidDriverReportMap(trips);
+    const driverReportMap = helpers.buildDriverReportMap(trips);
     helpers.writeResultFile(driverReportMap, drivers);
   });
 }
