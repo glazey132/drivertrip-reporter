@@ -9,7 +9,7 @@ I also wanted to separate my logic at least to a degree. That's why I chose to h
 
 One of the things I would devote a bit more time to if this project were serious, is tests. I would want to have a test for each helper function if I were actually pushing this to a production server. A few important test I regretably left out, were tests for things like helpers.writeResultFile -- That's a function you wouldn't want to ever fail if this were a production app, thus ample test coverage would be necessary.
 
-##How to run
+# How to run
 - cd into the project directory via command line terminal
 - make sure you have the latest stable version on Node.js installed
 - run `npm install`
@@ -17,7 +17,7 @@ One of the things I would devote a bit more time to if this project were serious
 - view the output file (myOutput.txt)
 - to test make you sure you've run npm install and then run `npm run test`
 
-##Some cool packages used: 
+# Some cool packages used: 
 - Commander (would be great to have if this were a production app and I had multiple flags I wanted to use in the CLI)
 - csv (allowed for easy file parsing)
 - lodash (who doesn't love lodash?)
