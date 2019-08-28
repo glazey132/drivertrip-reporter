@@ -21,6 +21,7 @@ function run() {
   let stream = fs.createReadStream(file).pipe(parse({ delimiter: "\n" }));
 
   stream.on("data", function(data) {
+    // stream the file as lines, and process each line w/ respect to it's first string (We expect Driver or Trip)
     let line = data[0];
     let wordArray = line.split(" ");
     if (wordArray[0] === "Driver") {
@@ -48,6 +49,7 @@ function run() {
   });
 
   stream.on("end", function() {
+    // when the stream is done we build the final report and then write the file
     const driverReportMap = helpers.buildDriverReportMap(trips);
     helpers.writeResultFile(driverReportMap, drivers);
   });

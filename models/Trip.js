@@ -1,4 +1,7 @@
-//driver name, start time, stop time, miles driven.
+/**
+ * Represents a trip.
+ * @constructor
+ */
 class Trip {
     constructor(driver, startTime, stopTime, milesDriven) {
         this.driver = driver;

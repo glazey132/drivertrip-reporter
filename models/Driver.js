@@ -1,4 +1,7 @@
-// name
+/**
+ * Represents a driver.
+ * @constructor
+ */
 class Driver {
     constructor(name) {
         this.name = name;

@@ -3,6 +3,11 @@ const _ = require("lodash");
 
 const Models = require("./models/Models");
 
+/**
+ * Creates a driver
+ * @param {String[]} wordArray an array of words (each line of the file read)
+ * @returns {Driver}
+ */
 function createDriver(wordArray) {
   const name = wordArray[1];
   const driver = new Models.Driver(name);
@@ -10,6 +15,12 @@ function createDriver(wordArray) {
   return driver;
 }
 
+/**
+ * Creates a trip
+ * @param {String[]} wordArray an array of words (each line of a file read)
+ * @param {Driver} drivers an array of drivers from our input file report
+ * @returns {Trip}
+ */
 function createTrip(wordArray, drivers) {
   const driver = drivers.filter(driver => driver.name === wordArray[1])[0];
   const startTime = wordArray[2];
@@ -21,6 +32,11 @@ function createTrip(wordArray, drivers) {
   return trip;
 }
 
+/**
+ * Filters it's input array of Trips so that only Trips that fall between 5mph and 100mph remain
+ * @param {Trip[]} trips an array of trips
+ * @returns {Trip[]}
+ */
 function filterTrips(trips) {
   return trips.filter(trip => {
     let timeStartArray = trip.startTime.split(":");
@@ -36,6 +52,12 @@ function filterTrips(trips) {
   });
 }
 
+/**
+ * Returns a trip time in the unit of minutes
+ * @param {String[]} timeStartArray  an array containing the hour and minute of a trips start time. Ex: ['12': '20'] 
+ * @param {String[]} timeStopArray   an array containing the hour and minute of a trips stop time. Ex: ['12': '20']
+ * @returns {Number}
+ */ 
 function getTripTimeInMinutes(timeStartArray, timeStopArray) {
   return (
     60 * parseInt(timeStopArray[0]) +
@@ -44,6 +66,12 @@ function getTripTimeInMinutes(timeStartArray, timeStopArray) {
   );
 }
 
+/**
+ * Returns a trip time in the unit of hours
+ * @param {String[]} timeStartArray  an array containing the hour and minute of a trips start time. Ex: ['12': '20'] 
+ * @param {String[]} timeStopArray   an array containing the hour and minute of a trips stop time. Ex: ['12': '20']
+ * @returns {Number}
+ */ 
 function getTripTimeInHours(timeStartArray, timeStopArray) {
   const tripTimeInMinutes =
     60 * parseInt(timeStopArray[0]) +
@@ -52,6 +80,11 @@ function getTripTimeInHours(timeStartArray, timeStopArray) {
   return tripTimeInMinutes / 60;
 }
 
+/**
+ * Returns a map of Drivers and their total miles and mph
+ * @param {Trip[]} trips
+ * @returns {Object}  
+ */
 function buildDriverReportMap(trips) {
   const driverReportMap = {};
 
@@ -80,6 +113,11 @@ function buildDriverReportMap(trips) {
   return driverReportMap;
 }
 
+/**
+ * Writes the result file
+ * @param {Object} finalReport a driver report map
+ * @param {Driver[]} drivers an array of drivers
+ */
 function writeResultFile(finalReport, drivers) {
   var wstream = fs.createWriteStream("myOutput.txt");
 
