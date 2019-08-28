@@ -22,28 +22,34 @@ function createTrip(wordArray, drivers) {
 }
 
 function filterTrips(trips) {
+  return trips.filter(trip => {
+    let timeStartArray = trip.startTime.split(":");
+    let timeStopArray = trip.stopTime.split(":");
 
-    return trips.filter(trip => {
-        let timeStartArray = trip.startTime.split(':');
-        let timeStopArray = trip.stopTime.split(':');
+    trip.timeInMinutes = getTripTimeInMinutes(timeStartArray, timeStopArray);
 
-        trip.timeInMinutes = getTripTimeInMinutes(timeStartArray, timeStopArray);
+    const tripTimeInHours = getTripTimeInHours(timeStartArray, timeStopArray);
 
-        const tripTimeInHours = getTripTimeInHours(timeStartArray, timeStopArray);
-        
-        const mph = trip.milesDriven / tripTimeInHours;
-        
-        return mph >= 5 && mph <= 100;
-    });
+    const mph = trip.milesDriven / tripTimeInHours;
+
+    return mph >= 5 && mph <= 100;
+  });
 }
 
 function getTripTimeInMinutes(timeStartArray, timeStopArray) {
-    return ((60 * parseInt(timeStopArray[0])) + parseInt(timeStopArray[1])) - ((60 * parseInt(timeStartArray[0])) + parseInt(timeStartArray[1]));
+  return (
+    60 * parseInt(timeStopArray[0]) +
+    parseInt(timeStopArray[1]) -
+    (60 * parseInt(timeStartArray[0]) + parseInt(timeStartArray[1]))
+  );
 }
 
 function getTripTimeInHours(timeStartArray, timeStopArray) {
-       const tripTimeInMinutes = ((60 * parseInt(timeStopArray[0])) + parseInt(timeStopArray[1])) - ((60 * parseInt(timeStartArray[0])) + parseInt(timeStartArray[1]));
-       return tripTimeInMinutes / 60;
+  const tripTimeInMinutes =
+    60 * parseInt(timeStopArray[0]) +
+    parseInt(timeStopArray[1]) -
+    (60 * parseInt(timeStartArray[0]) + parseInt(timeStartArray[1]));
+  return tripTimeInMinutes / 60;
 }
 
 function buildDriverReportMap(trips) {
