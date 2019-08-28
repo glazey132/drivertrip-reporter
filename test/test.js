@@ -50,4 +50,26 @@ describe('helpers', function() {
         assert.isOk(helpers.buildDriverReportMap, 'helpers.buildDriverReportMap is ok');
         assert.isOk(helpers.writeResultFile, 'helpers.writeResultFile is ok');
     });
+
+    it('should return a driver with name Alex when a an array with a string is passed to create driver', function() {
+        const driver = helpers.createDriver(['Driver', 'Alex']);
+        assert.isOk(driver, 'driver is ok');
+        assert.equal(driver.name, 'Alex', 'Driver name is Alex');
+    });
+
+    it('should return a trip with valid driver and valid startTime, stopTime, and milesDriven', function() {
+        const driver1 = new helpers.createDriver(['Driver', 'Alex']);
+        const driver2 = new helpers.createDriver(['Driver', 'John']);
+
+        const startTime = '12:00', stopTime = '12:30', milesDriven = 40;
+
+        const trip = helpers.createTrip(['Trip', 'Alex', startTime, stopTime, milesDriven], [driver1, driver2]);
+
+        assert.isOk(trip, 'trip is ok');
+        assert.isOk(trip.driver, 'trip.driver is ok');
+        assert.typeOf(trip.driver, 'object', 'trip.driver is an object');
+        assert.typeOf(trip.startTime, 'string', 'trip.startTime is a string');
+        assert.typeOf(trip.stopTime, 'string', 'trip.stopTime is a string');
+        assert.typeOf(trip.milesDriven, 'number', 'trip.number is a number');
+    })
 });
