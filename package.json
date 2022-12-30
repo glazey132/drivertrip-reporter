@@ -16,7 +16,7 @@
     "commander": "^3.0.0",
     "csv": "^5.1.2",
     "lodash": "^4.17.15",
-    "mocha": "^6.2.0"
+    "mocha": "^10.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
